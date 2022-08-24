@@ -1,15 +1,27 @@
 import React from "react";
 import { Formik } from "formik";
+import axios from "axios";
 
 export default function LoginForm() {
+  const validateUser = (values: { email: string; password: string }) => {
+    console.log("jea", values);
+
+    axios
+      .post("http://localhost:2022/login", values, {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      })
+      .then((res) => console.log(res))
+      .catch((error) => console.log("error", error));
+  };
+
   return (
     <div className="login-form">
       <h1>Moody</h1>
       <h2>Take control of your waves of emotions</h2>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "test@test.ee", password: "testtest" }}
         validate={(values) => {
-          const errors: { email?: string } = {};
+          const errors: { email?: string; password?: string } = {};
           if (!values.email) {
             errors.email = "Required";
           } else if (
@@ -19,11 +31,8 @@ export default function LoginForm() {
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={(values) => {
+          validateUser(values);
         }}
       >
         {({

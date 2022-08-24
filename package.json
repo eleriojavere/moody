@@ -10,7 +10,13 @@
     "@types/node": "^16.11.54",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
@@ -20,6 +26,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "nodemon": "server/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -46,5 +53,8 @@
   "prettier": {
     "printWidth": 80,
     "tabWidth": 2
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }
