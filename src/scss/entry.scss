@@ -1,0 +1,17 @@
+$main-background: #243781;
+
+body {
+  background-color: $main-background;
+  max-width: 1307px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+//pages
+@import "./pages/login.scss";
+
+// components
+@import "./components/login-form.scss";
