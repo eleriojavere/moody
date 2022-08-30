@@ -4,13 +4,11 @@ import axios from "axios";
 
 export default function LoginForm() {
   const validateUser = (values: { email: string; password: string }) => {
-    console.log("jea", values);
-
     axios
       .post("http://localhost:2022/login", values, {
         headers: { "Access-Control-Allow-Origin": "*" },
       })
-      .then((res) => console.log(res))
+      .then((res) => console.log(res.data))
       .catch((error) => console.log("error", error));
   };
 
@@ -43,7 +41,6 @@ export default function LoginForm() {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
             <input

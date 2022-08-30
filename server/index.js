@@ -27,17 +27,29 @@ app.post(
       });
     }
 
-    res.status(200).json({
-      token: generateAccessToken(req.body.email),
-    });
+    if (validUser(req.body.email, req.body.password)) {
+      return res.status(200).json({
+        token: generateAccessToken(req.body.email),
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        errors: errors.array,
+      });
+    }
   }
 );
 
 app.listen(port);
 
-function generateAccessToken(email) {
+const validUser = (email, password) => {
+  if (email === "test@test.ee" && password === "testtest") return true;
+  else return false;
+};
+
+const generateAccessToken = (email) => {
   const token = require("crypto").randomBytes(64).toString("hex");
   return jwt.sign(email, token);
-}
+};
 
 console.log("Port running at:  http://localhost:" + port);
