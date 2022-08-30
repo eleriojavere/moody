@@ -44,8 +44,10 @@ h2 {
 
 //pages
 @import "./pages/login.scss";
+@import "./pages/register.scss";
 
 // components
 @import "./components/login-form.scss";
+@import "./components/register-form.scss";
 
 @import "./fonts.scss";

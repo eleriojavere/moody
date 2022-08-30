@@ -1,4 +1,4 @@
-.login-form {
+.register-form {
   background-color: $white;
   margin: auto;
   padding: 50px 80px;
@@ -42,6 +42,14 @@
       font-weight: bold;
       border: none;
       cursor: pointer;
+    }
+
+    .login-link {
+      margin-top: 16px;
+
+      a {
+        color: $dark-blue;
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import "./scss/entry.scss";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./js/pages/Login";
+import Register from "./js/pages/Register";
 import Dashboard from "./js/pages/Dashboard";
 
 const root = ReactDOM.createRoot(
@@ -14,6 +15,7 @@ root.render(
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Dashboard />} />
       </Routes>
     </Router>
