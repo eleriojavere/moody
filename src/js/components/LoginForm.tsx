@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import axios from "axios";
 
 export default function LoginForm() {
-  const validateUser = (values: { email: string; password: string }) => {
+  const loginUser = (values: { email: string; password: string }) => {
     axios
       .post("http://localhost:2022/login", values, {
         headers: { "Access-Control-Allow-Origin": "*" },
@@ -17,7 +17,7 @@ export default function LoginForm() {
       <h1>Moody</h1>
       <h2>Take control of your waves of emotions</h2>
       <Formik
-        initialValues={{ email: "test@test.ee", password: "testtest" }}
+        initialValues={{ email: "", password: "" }}
         validate={(values) => {
           const errors: { email?: string; password?: string } = {};
           if (!values.email) {
@@ -30,7 +30,7 @@ export default function LoginForm() {
           return errors;
         }}
         onSubmit={(values) => {
-          validateUser(values);
+          loginUser(values);
         }}
       >
         {({

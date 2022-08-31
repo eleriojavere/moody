@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function RegisterForm() {
-  const validateUser = (values: { email: string; password: string }) => {
-    axios
-      .post("http://localhost:2022/register", values, {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log("error", error));
+  const { signup } = useAuth();
+  const [error, setError] = useState("");
+
+  const validateUser = async (values: { email: string; password: string }) => {
+    try {
+      setError("");
+      await signup(values.email, values.password);
+    } catch (e) {
+      console.error("Something went wrong", e);
+      setError("Failed to register, please try again");
+    }
   };
 
   return (
@@ -18,7 +22,7 @@ export default function RegisterForm() {
       <h1>Moody</h1>
       <h2>Take control of your waves of emotions</h2>
       <Formik
-        initialValues={{ email: "test@test.ee", password: "testtest" }}
+        initialValues={{ email: "", password: "" }}
         validate={(values) => {
           const errors: { email?: string; password?: string } = {};
           if (!values.email) {
@@ -63,7 +67,11 @@ export default function RegisterForm() {
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password && errors.password}
+            <div className="error">
+              {errors.password && touched.password && errors.password}
+            </div>
+            <div className="error">{error}</div>
+
             <button type="submit" disabled={isSubmitting}>
               Register
             </button>
