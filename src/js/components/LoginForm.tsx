@@ -1,15 +1,16 @@
 import React from "react";
 import { Formik } from "formik";
-import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginForm() {
-  const loginUser = (values: { email: string; password: string }) => {
-    axios
-      .post("http://localhost:2022/login", values, {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log("error", error));
+  const { logIn, error } = useAuth();
+
+  const loginUser = async (values: { email: string; password: string }) => {
+    try {
+      await logIn(values.email, values.password);
+    } catch (e) {
+      console.error("Something went wrong", e);
+    }
   };
 
   return (
@@ -63,6 +64,8 @@ export default function LoginForm() {
               value={values.password}
             />
             {errors.password && touched.password && errors.password}
+            {error && <div className="error">{error.message}</div>}
+
             <button type="submit" disabled={isSubmitting}>
               Log in
             </button>
