@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import PrimaryButton from "./PrimaryButton";
 
 export default function RegisterForm() {
   const { signup } = useAuth();
@@ -72,9 +73,9 @@ export default function RegisterForm() {
             </div>
             <div className="error">{error}</div>
 
-            <button type="submit" disabled={isSubmitting}>
+            <PrimaryButton type="submit" isDisabled={isSubmitting}>
               Register
-            </button>
+            </PrimaryButton>
             <div className="login-link">
               Already have an account? <Link to="/login"> Log in</Link>
             </div>

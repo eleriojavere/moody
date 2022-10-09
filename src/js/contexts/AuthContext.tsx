@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import firebase from "firebase/compat/app";
 
 const AuthContext = React.createContext<any>(null);
 
-export function AuthProvider({ children }: any) {
+export function AuthProvider({ children }: { children: ReactElement }) {
   const [currentUser, setCurrentUser] = useState<
     null | firebase.auth.UserCredential | firebase.User
   >(null);
@@ -28,9 +28,19 @@ export function AuthProvider({ children }: any) {
       });
   }
 
+  function signOut() {
+    auth
+      .signOut()
+      .then(() => {
+        setCurrentUser(null);
+      })
+      .catch((error) => {
+        setError({ code: error.code, message: error.message });
+      });
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log("user", user);
       setCurrentUser(user);
       setIsLoading(false);
     });
@@ -41,11 +51,13 @@ export function AuthProvider({ children }: any) {
     currentUser: null | firebase.auth.UserCredential | firebase.User;
     signup: (email: string, password: string) => void;
     logIn: (email: string, password: string) => void;
+    signOut: () => void;
     error: { code: string; message: string } | null;
   } = {
     currentUser,
     signup,
     logIn,
+    signOut,
     error,
   };
 

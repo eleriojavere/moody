@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
+import PrimaryButton from "./PrimaryButton";
 
 export default function LoginForm() {
   const { logIn, error } = useAuth();
@@ -66,9 +67,9 @@ export default function LoginForm() {
             {errors.password && touched.password && errors.password}
             {error && <div className="error">{error.message}</div>}
 
-            <button type="submit" disabled={isSubmitting}>
+            <PrimaryButton type="submit" isDisabled={isSubmitting}>
               Log in
-            </button>
+            </PrimaryButton>
           </form>
         )}
       </Formik>
