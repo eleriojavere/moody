@@ -2,14 +2,27 @@ import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import firebase from "firebase/compat/app";
 
-const AuthContext = React.createContext<any>(null);
+interface AuthContextInterface {
+  currentUser: firebase.User | firebase.auth.UserCredential | null;
+  signup: (email: string, password: string) => void;
+  logIn: (email: string, password: string) => void;
+  signOut: () => void;
+  error: null | { code: string; message: string };
+}
+
+const AuthContext = React.createContext<AuthContextInterface>({
+  currentUser: null,
+  signup: () => {},
+  logIn: () => {},
+  signOut: () => {},
+  error: null,
+});
 
 export function AuthProvider({ children }: { children: ReactElement }) {
-  const [currentUser, setCurrentUser] = useState<
-    null | firebase.auth.UserCredential | firebase.User
-  >(null);
+  const [currentUser, setCurrentUser] =
+    useState<AuthContextInterface["currentUser"]>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<null | { code: string; message: string }>(
+  const [error, setError] = useState<null | AuthContextInterface["error"]>(
     null
   );
 
