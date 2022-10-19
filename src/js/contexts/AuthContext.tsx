@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactElement }) {
   }, []);
 
   const value: {
-    currentUser: null | firebase.auth.UserCredential | firebase.User;
+    currentUser: AuthContextInterface["currentUser"];
     signup: (email: string, password: string) => void;
     logIn: (email: string, password: string) => void;
     signOut: () => void;

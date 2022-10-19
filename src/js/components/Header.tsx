@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <div className="header">
-      <div>Hi,{`${currentUser.email}`}</div>
+      {/* <div>Hi,{`${currentUser.email}`}</div> */}
       <PrimaryButton onClick={signOut}>Log out</PrimaryButton>
     </div>
   );
