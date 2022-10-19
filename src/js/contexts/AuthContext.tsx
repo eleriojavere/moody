@@ -1,9 +1,8 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase";
-import firebase from "firebase/compat/app";
 
 interface AuthContextInterface {
-  currentUser: firebase.User | firebase.auth.UserCredential | null;
+  currentUser: { email: string | null | undefined } | null;
   signup: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
   signOut: () => void;
@@ -34,7 +33,8 @@ export function AuthProvider({ children }: { children: ReactElement }) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        setCurrentUser(userCredential);
+        const user = { email: userCredential.user?.email };
+        setCurrentUser(user);
       })
       .catch((error) => {
         setError({ code: error.code, message: error.message });
