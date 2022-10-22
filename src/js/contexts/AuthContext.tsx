@@ -1,8 +1,11 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase";
 
+type User = {
+  email?: string | null;
+} | null;
 interface AuthContextInterface {
-  currentUser: { email: string | null | undefined } | null;
+  currentUser: User;
   signup: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
   signOut: () => void;
@@ -18,8 +21,7 @@ const AuthContext = React.createContext<AuthContextInterface>({
 });
 
 export function AuthProvider({ children }: { children: ReactElement }) {
-  const [currentUser, setCurrentUser] =
-    useState<AuthContextInterface["currentUser"]>(null);
+  const [currentUser, setCurrentUser] = useState<User>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | AuthContextInterface["error"]>(
     null
@@ -33,8 +35,10 @@ export function AuthProvider({ children }: { children: ReactElement }) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        const user = { email: userCredential.user?.email };
-        setCurrentUser(user);
+        if (userCredential?.user?.email != null) {
+          const user = { email: userCredential.user?.email };
+          setCurrentUser(user);
+        }
       })
       .catch((error) => {
         setError({ code: error.code, message: error.message });
@@ -60,13 +64,7 @@ export function AuthProvider({ children }: { children: ReactElement }) {
     return unsubscribe;
   }, []);
 
-  const value: {
-    currentUser: AuthContextInterface["currentUser"];
-    signup: (email: string, password: string) => void;
-    logIn: (email: string, password: string) => void;
-    signOut: () => void;
-    error: { code: string; message: string } | null;
-  } = {
+  const value = {
     currentUser,
     signup,
     logIn,
