@@ -4,11 +4,7 @@ import Dashboard from "../js/pages/Dashboard";
 import { AuthContext, User } from "../js/contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 
-jest.mock("../firebase.js", () => {
-  return {
-    auth: {},
-  };
-});
+jest.mock("../firebase.js", () => {});
 
 export function renderComponentWithAuthProvider(user: User) {
   return render(
