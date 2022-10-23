@@ -3,6 +3,7 @@ const config = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js", "json"],
 };
 
