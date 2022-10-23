@@ -1,10 +1,10 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../../firebase.js";
 
-type User = {
+export type User = {
   email?: string | null;
 } | null;
-interface AuthContextInterface {
+export interface AuthContextInterface {
   currentUser: User;
   signup: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
@@ -12,7 +12,7 @@ interface AuthContextInterface {
   error: null | { code: string; message: string };
 }
 
-const AuthContext = React.createContext<AuthContextInterface>({
+export const AuthContext = React.createContext<AuthContextInterface>({
   currentUser: null,
   signup: () => {},
   logIn: () => {},
@@ -50,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactElement }) {
       .signOut()
       .then(() => {
         setCurrentUser(null);
+        window.location.reload();
       })
       .catch((error) => {
         setError({ code: error.code, message: error.message });

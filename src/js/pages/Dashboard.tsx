@@ -1,11 +1,13 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { auth } from "../../firebase";
+
 import Header from "../components/Header";
+import { useAuth } from "../contexts/AuthContext";
+import Register from "../pages/Register";
 
 export default function Dashboard() {
-  if (!auth.currentUser) {
-    return <Navigate to="/register" />;
+  const { currentUser } = useAuth();
+  if (!currentUser) {
+    return <Register />;
   }
 
   return (

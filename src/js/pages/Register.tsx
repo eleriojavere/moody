@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import RegisterForm from "../components/RegisterForm";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function Login() {
+export default function Register() {
   const { currentUser } = useAuth();
 
   if (currentUser) {
